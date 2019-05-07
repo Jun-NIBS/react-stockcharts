@@ -157,7 +157,7 @@ class FibonacciRetracement extends Component {
 	}
 	render() {
 		const { current, override } = this.state;
-		const { retracements } = this.props;
+		const { retracements, yDisplayFormat = null } = this.props;
 
 		const {
 			appearance,
@@ -181,6 +181,7 @@ class FibonacciRetracement extends Component {
 			? <EachFibRetracement
 				interactive={false}
 				type={type}
+                yDisplayFormat={yDisplayFormat}
 				appearance={appearance}
 				hoverText={hoverTextWidthDefault}
 				{...current}
@@ -206,6 +207,7 @@ class FibonacciRetracement extends Component {
 							selected={each.selected}
 							{...(idx === overrideIndex ? override : each)}
 							hoverText={eachHoverText}
+                            yDisplayFormat={yDisplayFormat}
 							appearance={eachAppearance}
 							onDrag={this.handleDrag}
 							onDragComplete={this.handleDragComplete}

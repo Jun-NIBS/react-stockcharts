@@ -2,7 +2,7 @@ import {
 	isNotDefined,
 	isDefined,
 	mapObject,
-	find,
+	// find,
 } from "../utils";
 
 export function getValueFromOverride(override, index, key, defaultValue) {
@@ -34,40 +34,46 @@ export function isHoverForInteractiveType(interactiveType) {
 		if (isDefined(this.nodes)) {
 			const selecedNodes = this.nodes
 				.map(node => node.isHover(moreProps));
-			const interactive = this.props[interactiveType].map((t, idx) => {
+            return this.props[interactiveType].map((t, idx) => {
 				return {
 					...t,
 					selected: selecedNodes[idx]
 				};
 			});
-			return interactive;
 		}
 	};
 }
 
 export function isHover(moreProps) {
-	const hovering = mapObject(this.nodes, node => node.isHover(moreProps))
+    return mapObject(this.nodes, node => node.isHover(moreProps))
 		.reduce((a, b) => {
 			return a || b;
 		});
-	return hovering;
 }
 
 function getMouseXY(moreProps, [ox, oy]) {
 	if (Array.isArray(moreProps.mouseXY)) {
 		const { mouseXY: [x, y] } = moreProps;
-		const mouseXY = [
+        return [
 			x - ox,
 			y - oy
 		];
-		return mouseXY;
+
 	}
 	return moreProps.mouseXY;
 }
 
+const getChartConfig = (allProps, chartId) => {
+    const { chartConfig } = allProps;
+
+    if (Array.isArray(chartConfig)) {
+        return { ...chartConfig.find(conf => conf.id === chartId) };
+    }
+    return chartConfig;
+};
+
 export function getMorePropsForChart(moreProps, chartId) {
-	const { chartConfig: chartConfigList } = moreProps;
-	const chartConfig = find(chartConfigList, each => each.id === chartId);
+    const chartConfig = getChartConfig(moreProps, chartId);
 
 	const { origin } = chartConfig;
 	const mouseXY = getMouseXY(moreProps, origin);
@@ -79,7 +85,7 @@ export function getMorePropsForChart(moreProps, chartId) {
 }
 
 export function getSelected(interactives) {
-	const selected = interactives
+    return interactives
 		.map(each => {
 			const objects = each.objects.filter(obj => {
 				return obj.selected;
@@ -90,5 +96,4 @@ export function getSelected(interactives) {
 			};
 		})
 		.filter(each => each.objects.length > 0);
-	return selected;
 }
