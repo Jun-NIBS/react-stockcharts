@@ -32,7 +32,7 @@
     "info": "npm info react-stockcharts",
     "sourcemap:visualize": "source-map-explorer build/dist/react-stockcharts.min.js build/dist/react-stockcharts.min.js.map",
     "server": "cd build && python3 -m http.server 8090",
-    "prepare": "npm run babel:es"
+    "prepare": "npm run release; echo 'build success'; echo 'clear node nodules'; rimraf -rf ./node_modules; echo 'clear node nodules success';"
   },
   "dependencies": {
     "d3-array": "^1.2.1",
@@ -49,13 +49,7 @@
     "debug": "^3.1.0",
     "lodash.flattendeep": "^4.4.0",
     "prop-types": "^15.6.0",
-    "save-svg-as-png": "^1.4.5"
-  },
-  "peerDependencies": {
-    "react": "^15.0.0 || ^16.0.0",
-    "react-dom": "^15.0.0 || ^16.0.0"
-  },
-  "devDependencies": {
+    "save-svg-as-png": "^1.4.5",
     "autoprefixer-loader": "^3.2.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
@@ -97,8 +91,14 @@
     "url-loader": "^0.6.2",
     "webpack": "^3.8.1",
     "webpack-config-utils": "^2.3.0",
-    "webpack-dev-server": "^2.9.4",
     "whatwg-fetch": "^2.0.3"
+  },
+  "peerDependencies": {
+    "react": "^15.0.0 || ^16.0.0",
+    "react-dom": "^15.0.0 || ^16.0.0"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^2.9.4"
   },
   "browserify": {
     "transform": [
