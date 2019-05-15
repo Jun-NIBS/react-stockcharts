@@ -45,21 +45,15 @@ var YAxis = function (_Component) {
     _createClass(YAxis, [{
         key: "axisZoomCallback",
         value: function axisZoomCallback(newYDomain) {
+            var noCallback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
             var _context = this.context,
                 chartId = _context.chartId,
                 yAxisZoom = _context.yAxisZoom;
 
-            if (this.props.onDomainChange) {
+            if (this.props.onDomainChange && !noCallback) {
                 this.props.onDomainChange(newYDomain);
             }
             yAxisZoom(chartId, newYDomain);
-        }
-    }, {
-        key: "componentDidMount",
-        value: function componentDidMount() {
-            if (this.props.initialDomain) {
-                this.axisZoomCallback(this.props.initialDomain);
-            }
         }
     }, {
         key: "render",
@@ -96,8 +90,7 @@ YAxis.propTypes = {
     zoomEnabled: _propTypes2.default.bool,
     onContextMenu: _propTypes2.default.func,
     onDoubleClick: _propTypes2.default.func,
-    onDomainChange: _propTypes2.default.func,
-    initialDomain: _propTypes2.default.array
+    onDomainChange: _propTypes2.default.func
 };
 
 YAxis.defaultProps = {
@@ -121,7 +114,6 @@ YAxis.defaultProps = {
     fontWeight: 400,
     yZoomWidth: 40,
     zoomEnabled: true,
-    initialDomain: null,
     onDomainChange: null,
     getMouseDelta: function getMouseDelta(startXY, mouseXY) {
         return startXY[1] - mouseXY[1];

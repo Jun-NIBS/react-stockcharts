@@ -7,17 +7,12 @@ class YAxis extends Component {
         super(props, context);
         this.axisZoomCallback = this.axisZoomCallback.bind(this);
     }
-    axisZoomCallback(newYDomain) {
+    axisZoomCallback(newYDomain, noCallback = false) {
         const { chartId, yAxisZoom } = this.context;
-        if(this.props.onDomainChange){
+        if(this.props.onDomainChange && !noCallback) {
             this.props.onDomainChange(newYDomain);
         }
         yAxisZoom(chartId, newYDomain);
-    }
-    componentDidMount() {
-        if (this.props.initialDomain) {
-            this.axisZoomCallback(this.props.initialDomain);
-        }
     }
     render() {
         const { zoomEnabled, ...moreProps } = helper(this.props, this.context);
@@ -53,8 +48,7 @@ YAxis.propTypes = {
     zoomEnabled: PropTypes.bool,
     onContextMenu: PropTypes.func,
     onDoubleClick: PropTypes.func,
-    onDomainChange: PropTypes.func,
-    initialDomain: PropTypes.array
+    onDomainChange: PropTypes.func
 };
 
 YAxis.defaultProps = {
@@ -78,7 +72,6 @@ YAxis.defaultProps = {
     fontWeight: 400,
     yZoomWidth: 40,
     zoomEnabled: true,
-    initialDomain: null,
     onDomainChange: null,
     getMouseDelta: (startXY, mouseXY) => startXY[1] - mouseXY[1]
 };
