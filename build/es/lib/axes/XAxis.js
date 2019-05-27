@@ -27,10 +27,22 @@ var XAxis = function (_Component) {
 	_createClass(XAxis, [{
 		key: "axisZoomCallback",
 		value: function axisZoomCallback(newXDomain) {
-			var xAxisZoom = this.context.xAxisZoom;
+			var noCallback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+			var _context = this.context,
+			    chartId = _context.chartId,
+			    xAxisZoom = _context.xAxisZoom;
 
-			xAxisZoom(newXDomain);
+			if (this.props.onDomainChange && !noCallback) {
+				this.props.onDomainChange(newXDomain);
+			}
+			xAxisZoom(chartId, newXDomain);
 		}
+		// axisZoomCallback(newXDomain) {
+		// 	const { xAxisZoom } = this.context;
+		//
+		// 	xAxisZoom(newXDomain);
+		// }
+
 	}, {
 		key: "render",
 		value: function render() {
@@ -62,7 +74,8 @@ XAxis.propTypes = {
 	className: PropTypes.string,
 	zoomEnabled: PropTypes.bool,
 	onContextMenu: PropTypes.func,
-	onDoubleClick: PropTypes.func
+	onDoubleClick: PropTypes.func,
+	onDomainChange: PropTypes.func
 };
 
 XAxis.defaultProps = {
@@ -86,6 +99,7 @@ XAxis.defaultProps = {
 	fontWeight: 400,
 	xZoomHeight: 25,
 	zoomEnabled: true,
+	onDomainChange: null,
 	getMouseDelta: function getMouseDelta(startXY, mouseXY) {
 		return startXY[0] - mouseXY[0];
 	}

@@ -9,10 +9,18 @@ class XAxis extends Component {
 		super(props, context);
 		this.axisZoomCallback = this.axisZoomCallback.bind(this);
 	}
-	axisZoomCallback(newXDomain) {
-		const { xAxisZoom } = this.context;
-		xAxisZoom(newXDomain);
-	}
+    axisZoomCallback(newXDomain, noCallback = false) {
+        const { chartId, xAxisZoom } = this.context;
+        if(this.props.onDomainChange && !noCallback) {
+            this.props.onDomainChange(newXDomain);
+        }
+        xAxisZoom(chartId, newXDomain);
+    }
+	// axisZoomCallback(newXDomain) {
+	// 	const { xAxisZoom } = this.context;
+	//
+	// 	xAxisZoom(newXDomain);
+	// }
 	render() {
 		const { showTicks } = this.props;
 		const moreProps = helper(this.props, this.context);
@@ -42,6 +50,7 @@ XAxis.propTypes = {
 	zoomEnabled: PropTypes.bool,
 	onContextMenu: PropTypes.func,
 	onDoubleClick: PropTypes.func,
+    onDomainChange: PropTypes.func
 };
 
 XAxis.defaultProps = {
@@ -65,6 +74,7 @@ XAxis.defaultProps = {
 	fontWeight: 400,
 	xZoomHeight: 25,
 	zoomEnabled: true,
+    onDomainChange: null,
 	getMouseDelta: (startXY, mouseXY) => startXY[0] - mouseXY[0],
 };
 
