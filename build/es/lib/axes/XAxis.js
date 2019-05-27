@@ -28,14 +28,12 @@ var XAxis = function (_Component) {
 		key: "axisZoomCallback",
 		value: function axisZoomCallback(newXDomain) {
 			var noCallback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-			var _context = this.context,
-			    chartId = _context.chartId,
-			    xAxisZoom = _context.xAxisZoom;
+			var xAxisZoom = this.context.xAxisZoom;
 
 			if (this.props.onDomainChange && !noCallback) {
 				this.props.onDomainChange(newXDomain);
 			}
-			xAxisZoom(chartId, newXDomain);
+			xAxisZoom(newXDomain);
 		}
 		// axisZoomCallback(newXDomain) {
 		// 	const { xAxisZoom } = this.context;
