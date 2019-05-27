@@ -10,11 +10,11 @@ class XAxis extends Component {
 		this.axisZoomCallback = this.axisZoomCallback.bind(this);
 	}
     axisZoomCallback(newXDomain, noCallback = false) {
-        const { chartId, xAxisZoom } = this.context;
+        const { xAxisZoom } = this.context;
         if(this.props.onDomainChange && !noCallback) {
             this.props.onDomainChange(newXDomain);
         }
-        xAxisZoom(chartId, newXDomain);
+        xAxisZoom(newXDomain);
     }
 	// axisZoomCallback(newXDomain) {
 	// 	const { xAxisZoom } = this.context;
